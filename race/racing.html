@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BMW Models — Price List</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1a1a1a;
+    --ink-dim: #6b7280;
+    --line: #e5e7eb;
+    --bg: #f7f8fa;
+    --card: #ffffff;
+    --accent: #1c69d4;
+    --cta: #e8541e;
+    --cta-hover: #cf4715;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    font-family: 'Inter', sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+  }
+
+  /* Top bar */
+  .topbar {
+    background: #fff;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .topbar-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 18px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .brand {
+    font-weight: 700;
+    font-size: 19px;
+    letter-spacing: -0.01em;
+  }
+
+  .brand span { color: var(--accent); }
+
+  .nav {
+    display: flex;
+    gap: 28px;
+    font-size: 14px;
+    color: var(--ink-dim);
+  }
+
+  .nav a {
+    text-decoration: none;
+    color: var(--ink-dim);
+  }
+
+  .nav a:hover { color: var(--ink); }
+
+  /* Page intro */
+  .intro {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 36px 24px 8px;
+  }
+
+  .intro h1 {
+    font-size: 26px;
+    margin: 0 0 6px;
+  }
+
+  .intro p {
+    color: var(--ink-dim);
+    font-size: 14.5px;
+    margin: 0;
+  }
+
+  /* Listings */
+  .listings {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 24px 24px 64px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .card {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 28px;
+    display: grid;
+    grid-template-columns: 340px 1fr;
+    gap: 32px;
+  }
+
+  .photo-col {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .photo-box {
+    position: relative;
+    background: #f1f2f4;
+    border-radius: 8px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .photo-box.exterior { aspect-ratio: 4 / 3; }
+  .photo-box.interior { aspect-ratio: 16 / 9; }
+
+  .photo-box img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .photo-box .ph-loading {
+    color: var(--ink-dim);
+    font-size: 13px;
+  }
+
+  .photo-label {
+    position: absolute;
+    top: 8px;
+    left: 8px;
+    background: rgba(0,0,0,0.55);
+    color: #fff;
+    font-size: 11px;
+    font-weight: 600;
+    padding: 3px 8px;
+    border-radius: 4px;
+    letter-spacing: 0.02em;
+    z-index: 2;
+  }
+
+  .content {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .content .model-name {
+    font-size: 22px;
+    font-weight: 700;
+    margin: 0 0 4px;
+  }
+
+  .content .model-tag {
+    color: var(--ink-dim);
+    font-size: 13.5px;
+    margin: 0 0 18px;
+  }
+
+  .price-row {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+
+  .price-row .label {
+    font-size: 13px;
+    color: var(--ink-dim);
+  }
+
+  .price-row .price {
+    font-size: 26px;
+    font-weight: 700;
+    color: var(--ink);
+  }
+
+  .facts {
+    display: flex;
+    gap: 28px;
+    padding: 16px 0;
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+    margin-bottom: 20px;
+  }
+
+  .fact .k {
+    font-size: 12px;
+    color: var(--ink-dim);
+    margin-bottom: 3px;
+  }
+
+  .fact .v {
+    font-size: 14.5px;
+    font-weight: 600;
+  }
+
+  .actions {
+    display: flex;
+    gap: 12px;
+    margin-top: auto;
+  }
+
+  .btn-primary {
+    background: var(--cta);
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    padding: 11px 22px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.15s;
+  }
+
+  .btn-primary:hover { background: var(--cta-hover); }
+
+  .btn-secondary {
+    background: #fff;
+    color: var(--accent);
+    border: 1px solid var(--accent);
+    border-radius: 6px;
+    padding: 11px 22px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+  }
+
+  .btn-secondary:hover { background: #f0f6ff; }
+
+  @media (max-width: 680px) {
+    .card {
+      grid-template-columns: 1fr;
+    }
+    .facts { flex-wrap: wrap; gap: 18px 28px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="topbar-inner">
+    <div class="brand">BMW <span>Models</span></div>
+    <div class="nav">
+      <a href="#">Overview</a>
+      <a href="#">Price List</a>
+      <a href="#">Compare</a>
+      <a href="#">Offers</a>
+    </div>
+  </div>
+</div>
+
+<div class="intro">
+  <h1>BMW Price List</h1>
+  <p>Current model lineup with starting price and model year.</p>
+</div>
+
+<div class="listings" id="listings"></div>
+
+<script>
+  // Edit this list: model, price, year, and the Wikipedia page title used to source the photo
+  const bmwCars = [
+    { model: "BMW 3 Series", tag: "Sedan", price: 43000, year: 2024, wikiTitle: "BMW 3 Series" },
+    { model: "BMW 5 Series", tag: "Executive Sedan", price: 58000, year: 2024, wikiTitle: "BMW 5 Series" },
+    { model: "BMW X3",       tag: "SUV", price: 47000, year: 2023, wikiTitle: "BMW X3" },
+    { model: "BMW X5",       tag: "SUV", price: 65000, year: 2023, wikiTitle: "BMW X5" },
+    { model: "BMW M4",       tag: "Coupe", price: 78000, year: 2024, wikiTitle: "BMW M4" },
+    { model: "BMW i4",       tag: "Electric Sedan", price: 52000, year: 2025, wikiTitle: "BMW i4" },
+    { model: "BMW 7 Series", tag: "Luxury Sedan", price: 95000, year: 2025, wikiTitle: "BMW 7 Series" }
+  ];
+
+  const listings = document.getElementById("listings");
+
+  bmwCars.forEach((car, i) => {
+    const card = document.createElement("div");
+    card.className = "card";
+    card.innerHTML = `
+      <div class="photo-col">
+        <div class="photo-box exterior">
+          <span class="photo-label">Exterior</span>
+          <span class="ph-loading" id="ph-ext-${i}">Loading photo…</span>
+          <img id="img-ext-${i}" alt="${car.model} exterior" style="display:none;">
+        </div>
+        <div class="photo-box interior">
+          <span class="photo-label">Interior</span>
+          <span class="ph-loading" id="ph-int-${i}">Loading photo…</span>
+          <img id="img-int-${i}" alt="${car.model} interior" style="display:none;">
+        </div>
+      </div>
+      <div class="content">
+        <h2 class="model-name">${car.model}</h2>
+        <p class="model-tag">${car.tag}</p>
+
+        <div class="price-row">
+          <span class="label">Starting price</span>
+          <span class="price">$${car.price.toLocaleString()}</span>
+        </div>
+
+        <div class="facts">
+          <div class="fact">
+            <div class="k">Model Year</div>
+            <div class="v">${car.year}</div>
+          </div>
+          <div class="fact">
+            <div class="k">Body Type</div>
+            <div class="v">${car.tag}</div>
+          </div>
+          <div class="fact">
+            <div class="k">Starting At</div>
+            <div class="v">$${car.price.toLocaleString()}</div>
+          </div>
+        </div>
+
+        <div class="actions">
+          <button class="btn-primary">Get Best Price</button>
+          <button class="btn-secondary">View Details</button>
+        </div>
+      </div>
+    `;
+    listings.appendChild(card);
+  });
+
+  // Exterior photo: pulled from the model's Wikipedia infobox image
+  async function loadExteriorPhoto(car, index) {
+    const imgEl = document.getElementById(`img-ext-${index}`);
+    const phEl = document.getElementById(`ph-ext-${index}`);
+    try {
+      const url = `https://en.wikipedia.org/w/api.php?action=query&titles=${encodeURIComponent(car.wikiTitle)}&prop=pageimages&format=json&pithumbsize=700&origin=*`;
+      const res = await fetch(url);
+      const data = await res.json();
+      const page = Object.values(data.query.pages)[0];
+      if (page && page.thumbnail && page.thumbnail.source) {
+        imgEl.src = page.thumbnail.source;
+        imgEl.onload = () => {
+          imgEl.style.display = "block";
+          phEl.style.display = "none";
+        };
+      } else {
+        phEl.textContent = "No photo found";
+      }
+    } catch (err) {
+      phEl.textContent = "Photo unavailable";
+    }
+  }
+
+  // Interior photo: searched on Wikimedia Commons since infobox images are exterior shots
+  async function searchCommonsImage(query, thumbwidth = 700) {
+    const searchUrl = `https://commons.wikimedia.org/w/api.php?action=query&list=search&srsearch=${encodeURIComponent(query)}&srnamespace=6&format=json&origin=*`;
+    const searchRes = await fetch(searchUrl);
+    const searchData = await searchRes.json();
+    const results = searchData.query && searchData.query.search;
+    if (!results || !results.length) return null;
+
+    for (const result of results.slice(0, 5)) {
+      const infoUrl = `https://commons.wikimedia.org/w/api.php?action=query&titles=${encodeURIComponent(result.title)}&prop=imageinfo&iiprop=url&iiurlwidth=${thumbwidth}&format=json&origin=*`;
+      const infoRes = await fetch(infoUrl);
+      const infoData = await infoRes.json();
+      const page = Object.values(infoData.query.pages)[0];
+      const info = page && page.imageinfo && page.imageinfo[0];
+      if (info && (info.thumburl || info.url)) {
+        return info.thumburl || info.url;
+      }
+    }
+    return null;
+  }
+
+  async function loadInteriorPhoto(car, index) {
+    const imgEl = document.getElementById(`img-int-${index}`);
+    const phEl = document.getElementById(`ph-int-${index}`);
+    try {
+      const photoUrl = await searchCommonsImage(`${car.model} interior dashboard`);
+      if (photoUrl) {
+        imgEl.src = photoUrl;
+        imgEl.onload = () => {
+          imgEl.style.display = "block";
+          phEl.style.display = "none";
+        };
+      } else {
+        phEl.textContent = "No interior photo found";
+      }
+    } catch (err) {
+      phEl.textContent = "Photo unavailable";
+    }
+  }
+
+  bmwCars.forEach((car, i) => {
+    loadExteriorPhoto(car, i);
+    loadInteriorPhoto(car, i);
+  });
+</script>
+
+</body>
+</html>
